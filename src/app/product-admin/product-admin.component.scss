@@ -1,0 +1,22 @@
+.title-wrapper h1 {
+  font-family: New Century Schoolbook, TeX Gyre Schola, serif;
+  font-style: italic;
+  font-weight: bold;
+  color: #554242;
+}
+
+.form-wrapper {
+  background-color: #5542428a;
+  top: 0;
+  left: 0;
+  .card {
+    width: 50%;
+    margin: 5% 23%;
+  }
+  .close-icon-wrapper {
+    float: right;
+    position: absolute;
+    top: 2%;
+    right: 2%;
+  }
+}

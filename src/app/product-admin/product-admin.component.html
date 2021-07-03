@@ -1,0 +1,134 @@
+<div class="product-wrapper container w-100 h-100">
+  <div class="header-wrapper text-center pt-4 pb-4 w-100">
+    <div class="title-wrapper d-inline-flex">
+      <h1 class="text-primary">shop</h1>
+      <h1>Bridge</h1>
+    </div>
+  </div>
+  <div class="table-wrapper w-100" *ngIf="!errorMsg">
+    <h2 class="mb-3">
+      List Of Products
+      <button class="btn btn-primary float-right" (click)="onClickOtherAction('add',0)">
+        Add Product<i class="fa fa-plus-circle fa-lg ml-2" aria-hidden="true"></i>
+      </button>
+    </h2>
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th class="text-center">SI.No</th>
+          <th class="text-center">ID</th>
+          <th class="text-center">Name</th>
+          <th class="text-center">Description</th>
+          <th class="text-center">Product Image</th>
+          <th class="text-center">Price</th>
+          <th class="text-center">Other Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of productList; let i=index">
+          <td class="text-center">{{ i + 1 }}</td>
+          <td class="text-center">{{ product.productId }}</td>
+          <td class="text-center">{{ product.productName }}</td>
+          <td class="text-center">{{ product.productDescription }}</td>
+          <td class="text-center">
+            <span>
+              <img [src]="product.productImage" *ngIf="product.productImage" style="height: 50px; width: 100px">
+            </span>
+          </td>
+          <td class="text-center">{{ product.productPrice }}</td>
+          <td>
+            <span class="icon-wrapper row">
+              <span class="col text-right" (click)="onClickOtherAction('edit',product.productId)"><i
+                  class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></span>
+              <span class="col text-left" (click)="onClickOtherAction('delete',product.productId)"><i
+                  class="fa fa-trash fa-lg" aria-hidden="true"></i></span>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="table-err-wrapper" *ngIf="errorMsg">
+    <p>{{errorMsg}}</p>
+  </div>
+  <div class="form-wrapper position-absolute w-100" *ngIf="productFormWrapper">
+    <div class="card" *ngIf="productForm">
+      <div class="form-title-wrapper">
+        <h5 class="card-header">
+          Product Form
+          <span class="close-icon-wrapper" (click)="closeForm()">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </span>
+        </h5>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="productFormGroup" (ngSubmit)="onSubmitForm()">
+          <div class="form-group col">
+            <label>Product Name</label>
+            <input type="text" formControlName="productName" class="form-control" [value]="productInputName" />
+            <div *ngIf="!submitted">
+              <span class="text-danger">*First Name is required</span>
+            </div>
+          </div>
+          <div class="form-group col">
+            <label>Product Description</label>
+            <textarea class="form-control" name="productDescription" formControlName="productDescription"
+              id="productDescription" cols="30" rows="5" [value]="productInputDescription"></textarea>
+            <div *ngIf="!submitted">
+              <span class="text-danger">*Description is required</span>
+            </div>
+          </div>
+          <div class="form-group col">
+            <label>Product Price</label>
+            <input type="number" formControlName="productPrice" class="form-control" [value]="productInputPrice" />
+            <div *ngIf="!submitted">
+              <span class="text-danger">*Price is required</span>
+            </div>
+          </div>
+          <div class="form-group col">
+            <input type="file" class="custom-file-input" id="productImage" formControlName="productImage"
+              accept="image/*" (change)="onFileChange($event)" />
+            <label class="custom-file-label" for="productImage">Choose file</label>
+            <div *ngIf="!submitted">
+              <span class="text-danger">Image is optional</span>
+            </div>
+            <span>
+              <img [src]="uploadedImage" *ngIf="uploadedImage" style="height: 50px; width: 100px" />
+            </span>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-success mr-3" type="submit" [disabled]="productFormGroup.invalid"
+              *ngIf="!editEnable">
+              Add
+            </button>
+            <button class="btn btn-success mr-3" type="submit" *ngIf="editEnable">
+              save
+            </button>
+            <button class="btn btn-warning" type="reset" (click)="closeForm()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="card" *ngIf="deleteProductId" style="margin: 18% 23%;">
+      <div class="form-title-wrapper">
+        <h5 class="card-header">
+          Product Delete
+          <span class="close-icon-wrapper" (click)="closeForm()">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </span>
+        </h5>
+      </div>
+      <div class="card-body">
+        <form>
+          <label for="">Are you sure to delete this product</label>
+          <div class="text-center">
+            <button class="btn btn-success mr-3" type="submit" (click)="deleteProduct(deleteProductId)">
+              Delete
+            </button>
+            <button class="btn btn-warning" type="reset">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

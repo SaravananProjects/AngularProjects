@@ -1,0 +1,8 @@
+Follow the below steps to run the application:
+Step1: Download the project from git link
+Step2: Open cmd in that project folder path
+Step3: Give "npm ci"
+step4: Give "ng serve"
+Step5: Give "ng test --code-coverage=true" to test the project
+Step6: Go to project folder, open codecoverage folder, open shopbridge folder if is is there
+Step7: Open index.html in that folder, see code coverage
